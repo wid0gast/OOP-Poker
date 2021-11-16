@@ -44,6 +44,6 @@ public class Player {
 
     void fold() {
         Table.players.remove(this);
-        table.currentPlayerIndex--;
+        Table.currentPlayerIndex--;
     }
 }

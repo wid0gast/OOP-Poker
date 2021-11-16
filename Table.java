@@ -9,8 +9,8 @@ public class Table {
     static int bigBlind = 2 * smallBlind;
     static int currentBet = bigBlind;
     static int numberOfPlayers = players.size();
-    int currentPlayerIndex;
-    Player currentPlayer = players.get(currentPlayerIndex);
+    static int currentPlayerIndex;
+    static Player currentPlayer = players.get(currentPlayerIndex);
 
     Table(ArrayList<Player> p, int s) {
         players = p;
