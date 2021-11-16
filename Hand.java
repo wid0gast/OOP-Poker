@@ -5,12 +5,22 @@ public class Hand implements Comparable<Hand> {
     ArrayList<Card> hand = new ArrayList<>();
     Card bestCard;
     int worth = 0;
+    List<Card> tmp;
+    String flushSuit;
     
+    public Hand(Hand another) {
+        this.hand = another.hand;
+        this.bestCard = another.bestCard;
+        this.worth = another.worth;
+    }
+
     public Hand(ArrayList<Card> hand) {
         this.hand = hand;
         Collections.sort(hand);
         Collections.reverse(hand);
         this.bestCard = hand.get(0);
+
+        tmp = new ArrayList<>(hand);
 
         if(this.isRoyalFlush()) {
             worth = 9;
@@ -43,7 +53,7 @@ public class Hand implements Comparable<Hand> {
     }
 
     boolean isRoyalFlush() {
-        if(this.isFlush() && this.isStraight() && this.bestCard.rank == 14) {
+        if(this.isStraightFlush() && this.bestCard.rank == 14) {
             return true;
         }
         else {
@@ -52,7 +62,15 @@ public class Hand implements Comparable<Hand> {
     }
 
     boolean isStraightFlush() {
-        return (this.isStraight() && this.isFlush());
+        if(this.isFlush() && this.isStraight()) {
+            for(int i = 0; i < 5; i++) {
+                if(tmp.get(i).suit != flushSuit) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     boolean is4Kind() {
@@ -76,40 +94,51 @@ public class Hand implements Comparable<Hand> {
     }
     
     boolean isFlush() {
-        for(int i = 0; i < 2; i++) {
-            if(hand.get(i).suit == hand.get(i + 1).suit
-            && hand.get(i + 1).suit == hand.get(i + 2).suit
-            && hand.get(i + 2).suit == hand.get(i + 3).suit
-            && hand.get(i + 3).suit == hand.get(i + 4).suit) {
-                bestCard = hand.get(i);
-                return true;
+        Map<String, Integer> suits = new HashMap<String, Integer>();
+
+        for(int i = 0; i < 7; i++) {
+            suits.put(hand.get(i).suit, suits.get(hand.get(i).suit) + 1);
+        }
+        
+        if(suits.containsValue(5)) {
+            for(HashMap.Entry<String, Integer> e: suits.entrySet()) {
+                if(e.getValue() == 5) {
+                    flushSuit = e.getKey();
+                }
             }
+            return true;
         }
 
         return false;
     }
 
     boolean isStraight() {
-        for(int i = 0; i < 2; i++) {
-            if(hand.get(i).rank - hand.get(i + 1).rank == 1
-            && hand.get(i + 1).rank - hand.get(i + 2).rank == 1
-            && hand.get(i + 2).rank - hand.get(i + 3).rank == 1
-            && hand.get(i + 3).rank - hand.get(i + 4).rank == 1) {
-                bestCard = hand.get(i);
-                return true;
+        for(int i = 0; i < 7; i++) {
+            if(tmp.get(i).rank == tmp.get(i + 1).rank) {
+                tmp.remove(i);
             }
         }
-
-        for(int i = 0; i < 3; i++) {
-            if(hand.get(i).rank - hand.get(i + 1).rank == 1
-            && hand.get(i + 1).rank - hand.get(i + 2).rank == 1
-            && hand.get(i + 2).rank - hand.get(i + 3).rank == 1
-            && hand.get(i + 3).rank == 2
-            && hand.get(0).rank == 14) {
-                bestCard = hand.get(i);
-                return true;
+        if(tmp.size() >= 5) {
+            for(int i = 0; i < 2; i++) {
+                if(tmp.get(i).rank - tmp.get(i + 1).rank == 1
+                && tmp.get(i + 1).rank - tmp.get(i + 2).rank == 1
+                && tmp.get(i + 2).rank - tmp.get(i + 3).rank == 1
+                && tmp.get(i + 3).rank - tmp.get(i + 4).rank == 1) {
+                    bestCard = tmp.get(i);
+                    return true;
+                }
             }
-        }
+            for(int i = 0; i < 3; i++) {
+                if(tmp.get(i).rank - tmp.get(i + 1).rank == 1
+                && tmp.get(i + 1).rank - tmp.get(i + 2).rank == 1
+                && tmp.get(i + 2).rank - tmp.get(i + 3).rank == 1
+                && tmp.get(i + 3).rank == 2
+                && tmp.get(0).rank == 14) {
+                    bestCard = tmp.get(i);
+                    return true;
+                }
+            }
+        }   
 
         return false;
     }

@@ -22,8 +22,8 @@ public class Player {
         currentChips -= playerBet;
     }
 
-    void check() {
-        for(int i = 0; i < table.currentPlayerIndex; i++){
+    void check() throws ForbiddenCheckException {
+        for(int i = 0; i < Table.currentPlayerIndex; i++){
             if(Table.players.get(i).playerBet != 0){
                 throw new ForbiddenCheckException("CANNOT CHECK");
             }
