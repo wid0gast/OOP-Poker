@@ -6,7 +6,7 @@ public class Player {
     int currentChips;
     ArrayList<Card> holeCards = new ArrayList<>();
     int playerBet = Table.currentBet;
-    int playerRound;
+    boolean isAllIn = false;
 
     Player(String n, int i) {
         name = n;
@@ -17,6 +17,7 @@ public class Player {
         if(currentChips < Table.currentBet) {
             System.out.println("Going All In!");
             playerBet = currentChips;
+            isAllIn = true;
         }
         currentChips -= playerBet;
     }
@@ -35,7 +36,10 @@ public class Player {
             throw new NotEnoughChipsException("NOT ENOUGH CHIPS!");
         }
         currentChips -= playerBet;
-        Table.currentBet = playerBet; 
+        Table.currentBet = playerBet;
+        if(currentChips == 0){
+            isAllIn = true;
+        } 
     }
 
     void fold() {
