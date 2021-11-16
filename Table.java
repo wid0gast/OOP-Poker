@@ -2,13 +2,13 @@ import java.util.*;
 //import java.io.*;
 
 public class Table {
-    static int numberOfPlayers;
     static ArrayList<Player> players = new ArrayList<>();
     static int pot = 0;
     static ArrayList<Card> communityCards = new ArrayList<>();
     static int smallBlind = 10;
     static int bigBlind = 2 * smallBlind;
     static int currentBet = bigBlind;
+    static int numberOfPlayers = players.size();
     int currentPlayerIndex;
     Player currentPlayer = players.get(currentPlayerIndex);
 
@@ -34,7 +34,13 @@ public class Table {
             pot += currentPlayer.playerBet;
             break;
         case 2:
-            currentPlayer.check();
+            try {
+                currentPlayer.check();
+            } 
+            catch (Exception e) {
+                currentPlayerIndex--;
+                promptPlayer();
+            }
             break;
         case 3:
             int tmp = sc.nextInt();
@@ -49,6 +55,7 @@ public class Table {
             break;
         case 4:
             currentPlayer.fold();
+            numberOfPlayers--;
             break;
         default:
             System.out.println("Invalid input");
@@ -57,6 +64,24 @@ public class Table {
             break;
         }
         sc.close();
+    }
+
+    void revealCard(){
+        for(int i = 0; i < numberOfPlayers; i++){
+            if(players.get(i).playerBet == currentBet){
+                continue;
+            }
+            else{
+                currentPlayer = players.get(i);
+                promptPlayer();
+            }
+        }
+        for(int i = 3; i < 5; i++){
+            if (communityCards.get(i).faceUp == false) {
+                communityCards.get(i).faceUp = true;
+                break;
+            }
+        }
     }
 
 }
