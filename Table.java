@@ -11,45 +11,52 @@ public class Table {
     static int currentBet = bigBlind;
     int currentPlayerIndex;
     Player currentPlayer = players.get(currentPlayerIndex);
-    
+
     Table(ArrayList<Player> p, int s) {
         players = p;
-        smallBlind = s;    
+        smallBlind = s;
     }
 
-    void promptPlayer(){
+    void promptPlayer() {
         System.out.println("Current Turn: " + currentPlayer.name);
         System.out.println("1-call ; 2-check ; 3-raise ; 4-fold");
-        if (currentPlayerIndex++ >= numberOfPlayers){
+        if(currentPlayerIndex++ >= numberOfPlayers) {
             currentPlayerIndex = 0;
-        } 
+        }
     }
 
-    void recordBet(){
+    void recordBet() {
         Scanner sc = new Scanner(System.in);
-        int bet = sc.nextInt();
-        switch (bet) {
-            case 1:
-                currentPlayer.call();
-                break;
-            case 2:
-                currentPlayer.check();
-                break;
-            case 3:
-                int tmp = sc.nextInt(); 
+        int choice = sc.nextInt();
+        switch(choice) {
+        case 1:
+            currentPlayer.call();
+            pot += currentPlayer.playerBet;
+            break;
+        case 2:
+            currentPlayer.check();
+            break;
+        case 3:
+            int tmp = sc.nextInt();
+            try {
                 currentPlayer.raise(tmp);
-                break;
-            case 4:
-                currentPlayer.fold();
-                break;    
-            default:
-                System.out.println("Invalid input");
+                pot += currentPlayer.playerBet;
+            } 
+            catch (Exception e) {
                 currentPlayerIndex--;
                 promptPlayer();
-                break;
+            }
+            break;
+        case 4:
+            currentPlayer.fold();
+            break;
+        default:
+            System.out.println("Invalid input");
+            currentPlayerIndex--;
+            promptPlayer();
+            break;
         }
-        currentPlayer.currentChips -= currentBet;
-        pot += currentBet;
+        sc.close();
     }
 
 }
