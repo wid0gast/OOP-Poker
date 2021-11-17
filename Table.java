@@ -3,24 +3,26 @@ import java.util.*;
 
 public class Table {
     static ArrayList<Player> players = new ArrayList<>();
+    static ArrayList<Player> roundPlayers = new ArrayList<>();
     static int pot = 0;
     static ArrayList<Card> communityCards = new ArrayList<>();
     static int smallBlind = 10;
     static int bigBlind = 2 * smallBlind;
     static int currentBet = bigBlind;
-    static int numPlayers = players.size();
+    static int numPlayers = roundPlayers.size();
     static int currentPlayerIndex;
-    static Player currentPlayer = players.get(currentPlayerIndex);
+    static Player currentPlayer = roundPlayers.get(currentPlayerIndex);
 
     Table(ArrayList<Player> p, int s) {
         players = p;
         smallBlind = s;
+        roundPlayers = p;
     }
 
     void runGame() {
         for(int i = 0; i < 2; i++) {
             for(int j = 0; j < numPlayers; i++) {
-                Deck.deal(players.get(j));
+                Deck.deal(roundPlayers.get(j));
             }
         }
         Deck.burn();
@@ -109,17 +111,17 @@ public class Table {
         if(currentPlayerIndex++ >= numPlayers) {
             currentPlayerIndex = 0;
         }
-        currentPlayer = players.get(currentPlayerIndex);
+        currentPlayer = roundPlayers.get(currentPlayerIndex);
         sc.close();
     }
 
     void revealCard(){
         for(int i = 0; i < numPlayers; i++){
-            if(players.get(i).playerBet == currentBet){
+            if(roundPlayers.get(i).playerBet == currentBet){
                 continue;
             }
             else{
-                currentPlayer = players.get(i);
+                currentPlayer = roundPlayers.get(i);
                 promptPlayer();
             }
         }
