@@ -142,7 +142,16 @@ public class Table {
                 return o1.hand.compareTo(o2.hand);
             }
         });
-        
+        int numWinners = 1;
+        for (int  i = 1; i < roundPlayers.size(); i++){
+            if(roundPlayers.get(0).hand.worth == roundPlayers.get(i).hand.worth){
+                numWinners++;
+            }
+        }
+        int roundPrize = pot/numWinners;
+        for(int i = 0; i < numWinners; i++){
+            roundPlayers.get(i).currentChips += roundPrize;
+        }
     }
 
 }
