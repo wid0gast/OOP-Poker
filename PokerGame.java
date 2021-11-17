@@ -18,6 +18,14 @@ public class PokerGame {
         }
         Table table = new Table(players);
         table.runGame();
+        System.out.printf("Another Round? %n1: Yes %n2: No");
+        int x = sc.nextInt();
+        while(x == 1) {
+            table.runGame();
+            System.out.printf("Another Round? %n1: Yes %n2: No");
+            x = sc.nextInt();
+        }
+        System.out.println("Thank You For Playing!");
         sc.close();
     }
 }

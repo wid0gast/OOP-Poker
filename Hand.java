@@ -105,6 +105,12 @@ public class Hand implements Comparable<Hand> {
                 if(e.getValue() == 5) {
                     flushSuit = e.getKey();
                 }
+                for(Card c : hand) {
+                    if(c.suit == flushSuit) {
+                        bestCard = c;
+                        break;
+                    }
+                }
             }
             return true;
         }

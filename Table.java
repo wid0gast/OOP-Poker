@@ -47,6 +47,7 @@ public class Table {
             recordBet();
         }
         revealCard(0);
+        declareWinner();
     }
 
     void printCard(Card c) {
@@ -154,6 +155,10 @@ public class Table {
         int roundPrize = pot/numWinners;
         for(int i = 0; i < numWinners; i++){
             roundPlayers.get(i).currentChips += roundPrize;
+        }
+        if(numWinners == 1) {
+            System.out.println("Winner is: " + roundPlayers.get(0).name + "!!");
+            System.out.println("You Win: " + roundPrize + " Chips!");
         }
     }
 
