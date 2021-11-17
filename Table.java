@@ -8,7 +8,7 @@ public class Table {
     static int smallBlind = 10;
     static int bigBlind = 2 * smallBlind;
     static int currentBet = bigBlind;
-    static int numberOfPlayers = players.size();
+    static int numPlayers = players.size();
     static int currentPlayerIndex;
     static Player currentPlayer = players.get(currentPlayerIndex);
 
@@ -17,12 +17,55 @@ public class Table {
         smallBlind = s;
     }
 
+    void runGame() {
+        for(int i = 0; i < 2; i++) {
+            for(int j = 0; j < numPlayers; i++) {
+                Deck.deal(players.get(j));
+            }
+        }
+        Deck.burn();
+        for(int i = 0; i < numPlayers; i++) {
+            promptPlayer();
+            recordBet();
+        }
+        for(int i = 0; i < 3; i++) {
+            Deck.deal(communityCards);
+            printCard(communityCards.get(i));
+        }
+        Deck.burn();
+        for(int i = 0; i < numPlayers; i++) {
+            promptPlayer();
+            recordBet();
+        }
+        Deck.deal(communityCards);
+        printCard(communityCards.get(3));
+        Deck.burn();
+        for(int i = 0; i < numPlayers; i++) {
+            promptPlayer();
+            recordBet();
+        }
+        Deck.deal(communityCards);
+        printCard(communityCards.get(4));
+    }
+
+    void printCard(Card c) {
+        System.out.println(c.rank + " " + c.suit);
+    }
+
     void promptPlayer() {
         System.out.println("Current Turn: " + currentPlayer.name);
-        System.out.println("1-call ; 2-check ; 3-raise ; 4-fold");
-        if(currentPlayerIndex++ >= numberOfPlayers) {
-            currentPlayerIndex = 0;
+        System.out.println("Current Chips " + currentPlayer.currentChips);
+        System.out.println("Player Cards:");
+        for(Card c : currentPlayer.holeCards) {
+            printCard(c);
         }
+        System.out.println("Community Cards:");
+        for(Card c : communityCards) {
+            printCard(c);
+        }
+        System.out.println("Pot: " + pot);
+        System.out.println("Choose Option");
+        System.out.println("1-call ; 2-check ; 3-raise ; 4-fold");
     }
 
     void recordBet() {
@@ -55,7 +98,7 @@ public class Table {
             break;
         case 4:
             currentPlayer.fold();
-            numberOfPlayers--;
+            numPlayers--;
             break;
         default:
             System.out.println("Invalid input");
@@ -63,11 +106,15 @@ public class Table {
             promptPlayer();
             break;
         }
+        if(currentPlayerIndex++ >= numPlayers) {
+            currentPlayerIndex = 0;
+        }
+        currentPlayer = players.get(currentPlayerIndex);
         sc.close();
     }
 
     void revealCard(){
-        for(int i = 0; i < numberOfPlayers; i++){
+        for(int i = 0; i < numPlayers; i++){
             if(players.get(i).playerBet == currentBet){
                 continue;
             }

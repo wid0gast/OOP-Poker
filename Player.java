@@ -9,8 +9,8 @@ public class Player {
     boolean isAllIn = false;
 
     Player(String n, int i) {
-        name = n;
-        currentChips = i;
+        this.name = n;
+        this.currentChips = i;
     }
 
     void call() {

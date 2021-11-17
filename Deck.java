@@ -23,8 +23,12 @@ public class Deck {
         }
     }
 
-    static Card deal() {
-        return deck.pop();
+    static void deal(Player p) {
+        p.holeCards.add(deck.pop());
+    }
+
+    static void deal(ArrayList<Card> com) {
+        com.add(deck.pop());
     }
 
     static void shuffle() {
