@@ -16,11 +16,8 @@ public class PokerGame {
             Player tmp = new Player(tmp1, tmp2);
             players.add(tmp);
         }
-        System.out.println("Enter Small Blind amount");
-        int sb = sc.nextInt();
-        Table table = new Table(players, sb);
+        Table table = new Table(players);
         table.runGame();
-
         sc.close();
     }
 }

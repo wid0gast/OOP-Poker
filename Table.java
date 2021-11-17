@@ -13,9 +13,8 @@ public class Table {
     static int currentPlayerIndex;
     static Player currentPlayer = roundPlayers.get(currentPlayerIndex);
 
-    Table(ArrayList<Player> p, int s) {
+    Table(ArrayList<Player> p) {
         players = p;
-        smallBlind = s;
         roundPlayers = p;
     }
 
@@ -30,24 +29,24 @@ public class Table {
             promptPlayer();
             recordBet();
         }
-        for(int i = 0; i < 3; i++) {
-            Deck.deal(communityCards);
-            printCard(communityCards.get(i));
-        }
+        revealCard(3);
         Deck.burn();
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
         }
-        Deck.deal(communityCards);
-        printCard(communityCards.get(3));
+        revealCard(1);
         Deck.burn();
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
         }
-        Deck.deal(communityCards);
-        printCard(communityCards.get(4));
+        revealCard(1);
+        for(int i = 0; i < numPlayers; i++) {
+            promptPlayer();
+            recordBet();
+        }
+        revealCard(0);
     }
 
     void printCard(Card c) {
@@ -115,7 +114,7 @@ public class Table {
         sc.close();
     }
 
-    void revealCard(){
+    void revealCard(int n){
         for(int i = 0; i < numPlayers; i++){
             if(roundPlayers.get(i).playerBet == currentBet){
                 continue;
@@ -125,12 +124,25 @@ public class Table {
                 promptPlayer();
             }
         }
-        for(int i = 3; i < 5; i++){
-            if (communityCards.get(i).faceUp == false) {
-                communityCards.get(i).faceUp = true;
-                break;
-            }
+        for(int i = 0; i < n; i++) {
+            Deck.deal(communityCards);
+            printCard(communityCards.get(communityCards.size() - 1));
         }
+    }
+
+    void declareWinner() {
+        for(Player p : roundPlayers) {
+            ArrayList<Card> tmp = new ArrayList<>(p.holeCards);
+            tmp.addAll(communityCards);
+            p.hand = new Hand(tmp);
+        }
+        Collections.sort(roundPlayers, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o1.hand.compareTo(o2.hand);
+            }
+        });
+        
     }
 
 }

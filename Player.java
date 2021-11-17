@@ -7,6 +7,7 @@ public class Player {
     ArrayList<Card> holeCards = new ArrayList<>();
     int playerBet = Table.currentBet;
     boolean isAllIn = false;
+    Hand hand;
 
     Player(String n, int i) {
         this.name = n;
