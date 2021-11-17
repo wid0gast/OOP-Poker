@@ -2,9 +2,10 @@ import java.util.*;
 //import java.io.*;
 
 public class Deck {
-    static Stack<Card> deck = new Stack<>();
+    static Stack<Card> deck;
 
     static void makeDeck() {
+        deck = new Stack<>();
         for(int i = 0; i < 4; i++) {
             for(int j = 2; j < 15; j++) {
                 if(i == 0) {
@@ -21,9 +22,11 @@ public class Deck {
                 }
             }
         }
+        System.out.println(deck.size());
     }
-
+    static int here = 0;
     static void deal(Player p) {
+        System.out.println(here++);
         p.holeCards.add(deck.pop());
     }
 

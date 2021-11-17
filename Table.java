@@ -2,25 +2,31 @@ import java.util.*;
 //import java.io.*;
 
 public class Table {
-    static ArrayList<Player> players = new ArrayList<>();
-    static ArrayList<Player> roundPlayers = new ArrayList<>();
+    static ArrayList<Player> players;
+    static ArrayList<Player> roundPlayers;
     static int pot = 0;
-    static ArrayList<Card> communityCards = new ArrayList<>();
+    static ArrayList<Card> communityCards;
     static int smallBlind = 10;
     static int bigBlind = 2 * smallBlind;
     static int currentBet = bigBlind;
-    static int numPlayers = roundPlayers.size();
+    static int numPlayers;
     static int currentPlayerIndex;
-    static Player currentPlayer = roundPlayers.get(currentPlayerIndex);
+    static Player currentPlayer;
 
     Table(ArrayList<Player> p) {
-        players = p;
-        roundPlayers = p;
+        players = new ArrayList<>(p);
+        roundPlayers = new ArrayList<>(p);
+        communityCards = new ArrayList<>();
+        numPlayers = roundPlayers.size();
+        currentPlayer = roundPlayers.get(currentPlayerIndex);
+        Deck.makeDeck();
+
     }
 
     void runGame() {
+        Deck.shuffle();
         for(int i = 0; i < 2; i++) {
-            for(int j = 0; j < numPlayers; i++) {
+            for(int j = 0; j < numPlayers; j++) {
                 Deck.deal(roundPlayers.get(j));
             }
         }
@@ -50,11 +56,11 @@ public class Table {
         declareWinner();
     }
 
-    void printCard(Card c) {
+    static void printCard(Card c) {
         System.out.println(c.rank + " " + c.suit);
     }
 
-    void promptPlayer() {
+    static void promptPlayer() {
         System.out.println("Current Turn: " + currentPlayer.name);
         System.out.println("Current Chips " + currentPlayer.currentChips);
         System.out.println("Player Cards:");
@@ -70,7 +76,7 @@ public class Table {
         System.out.println("1-call ; 2-check ; 3-raise ; 4-fold");
     }
 
-    void recordBet() {
+    static void recordBet() {
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         switch(choice) {
@@ -115,7 +121,7 @@ public class Table {
         sc.close();
     }
 
-    void revealCard(int n){
+    static void revealCard(int n){
         for(int i = 0; i < numPlayers; i++){
             if(roundPlayers.get(i).playerBet == currentBet){
                 continue;
@@ -131,7 +137,7 @@ public class Table {
         }
     }
 
-    void declareWinner() {
+    static void declareWinner() {
         for(Player p : roundPlayers) {
             ArrayList<Card> tmp = new ArrayList<>(p.holeCards);
             tmp.addAll(communityCards);
