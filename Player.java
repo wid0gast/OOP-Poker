@@ -24,7 +24,7 @@ public class Player {
 
     void check() throws ForbiddenCheckException {
         for(int i = 0; i < Table.currentPlayerIndex; i++){
-            if(Table.players.get(i).playerBet != 0){
+            if(Table.roundPlayers.get(i).playerBet != 0){
                 throw new ForbiddenCheckException("CANNOT CHECK");
             }
         }
@@ -43,7 +43,12 @@ public class Player {
     }
 
     void fold() {
-        Table.players.remove(this);
+        Table.roundPlayers.remove(this);
         Table.currentPlayerIndex--;
+    }
+
+    void leaveGame(){
+        Table.players.remove(this);
+        Table.numPlayers--;
     }
 }
