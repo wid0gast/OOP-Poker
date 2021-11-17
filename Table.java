@@ -144,7 +144,10 @@ public class Table {
         });
         int numWinners = 1;
         for (int  i = 1; i < roundPlayers.size(); i++){
-            if(roundPlayers.get(0).hand.worth == roundPlayers.get(i).hand.worth){
+            if(roundPlayers.get(0).hand.worth != roundPlayers.get(i).hand.worth){
+                break;
+            }
+            else{
                 numWinners++;
             }
         }
