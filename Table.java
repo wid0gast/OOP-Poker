@@ -12,6 +12,7 @@ public class Table {
     static int numPlayers;
     static int currentPlayerIndex;
     static Player currentPlayer;
+    static Scanner sc = new Scanner(System.in);
 
     Table(ArrayList<Player> p) {
         players = new ArrayList<>(p);
@@ -35,6 +36,7 @@ public class Table {
             promptPlayer();
             recordBet();
         }
+        System.out.println("Revealing Flop: ");
         revealCard(3);
         Deck.burn();
         for(int i = 0; i < numPlayers; i++) {
@@ -77,8 +79,7 @@ public class Table {
     }
 
     static void recordBet() {
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice = Integer.parseInt(sc.nextLine());
         switch(choice) {
         case 1:
             currentPlayer.call();
@@ -107,6 +108,9 @@ public class Table {
         case 4:
             currentPlayer.fold();
             numPlayers--;
+            if(numPlayers == 1) {
+                declareWinner(roundPlayers.get(0));
+            }
             break;
         default:
             System.out.println("Invalid input");
@@ -114,11 +118,11 @@ public class Table {
             promptPlayer();
             break;
         }
-        if(currentPlayerIndex++ >= numPlayers) {
+        if(++currentPlayerIndex >= numPlayers) {
             currentPlayerIndex = 0;
         }
         currentPlayer = roundPlayers.get(currentPlayerIndex);
-        sc.close();
+        //sc.close();
     }
 
     static void revealCard(int n){
@@ -166,6 +170,19 @@ public class Table {
             System.out.println("Winner is: " + roundPlayers.get(0).name + "!!");
             System.out.println("You Win: " + roundPrize + " Chips!");
         }
+        else {
+            System.out.println("Winners are: ");
+            for(int i = 0; i < numWinners; i++) {
+                System.out.println(roundPlayers.get(i) + "!! You Win: " + roundPrize + "Chips!");
+            }
+        }
+    }
+
+    static void declareWinner(Player p) {
+        System.out.println("Winner is: " + p.name + "!!");
+        System.out.println("You Win: " + pot + " Chips!");
+        //System.exit(0);
+        /* At this point we want the runGame() function to close but idk how to do that */
     }
 
 }

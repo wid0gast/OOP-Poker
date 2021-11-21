@@ -94,8 +94,11 @@ public class Hand implements Comparable<Hand> {
     }
     
     boolean isFlush() {
-        Map<String, Integer> suits = new HashMap<String, Integer>();
-
+        HashMap<String, Integer> suits = new HashMap<String, Integer>();
+        suits.put("Spades", 0);
+        suits.put("Diamonds", 0);
+        suits.put("Hearts", 0);
+        suits.put("Clubs", 0);
         for(int i = 0; i < 7; i++) {
             suits.put(hand.get(i).suit, suits.get(hand.get(i).suit) + 1);
         }
@@ -119,9 +122,9 @@ public class Hand implements Comparable<Hand> {
     }
 
     boolean isStraight() {
-        for(int i = 0; i < 7; i++) {
-            if(tmp.get(i).rank == tmp.get(i + 1).rank) {
-                tmp.remove(i);
+        for(int i = 0; i < 6; i++) {
+            if(hand.get(i).rank == hand.get(i + 1).rank) {
+                tmp.remove(hand.get(i));
             }
         }
         if(tmp.size() >= 5) {
@@ -162,8 +165,8 @@ public class Hand implements Comparable<Hand> {
 
     boolean isTwoPair() {
         int c = 0;
-        for(int i = 6; i >= 0; i--) {
-            if(hand.get(i).rank == hand.get(i + 1).rank) {
+        for(int i = 6; i >= 1; i--) {
+            if(hand.get(i).rank == hand.get(i - 1).rank) {
                 bestCard = hand.get(i);
                 c++;
                 i--;

@@ -22,11 +22,8 @@ public class Deck {
                 }
             }
         }
-        System.out.println(deck.size());
     }
-    static int here = 0;
     static void deal(Player p) {
-        System.out.println(here++);
         p.holeCards.add(deck.pop());
     }
 
