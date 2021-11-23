@@ -13,6 +13,7 @@ public class Table {
     static int currentPlayerIndex;
     static Player currentPlayer;
     static Scanner sc = new Scanner(System.in);
+    static boolean gameOver = false;
 
     Table(ArrayList<Player> p) {
         players = new ArrayList<>(p);
@@ -35,6 +36,9 @@ public class Table {
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
+            if(gameOver) {
+                return;
+            }
         }
         System.out.println("Revealing Flop: ");
         revealCard(3);
@@ -42,17 +46,26 @@ public class Table {
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
+            if(gameOver) {
+                return;
+            }
         }
         revealCard(1);
         Deck.burn();
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
+            if(gameOver) {
+                return;
+            }
         }
         revealCard(1);
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
+            if(gameOver) {
+                return;
+            }
         }
         revealCard(0);
         declareWinner();
@@ -181,8 +194,7 @@ public class Table {
     static void declareWinner(Player p) {
         System.out.println("Winner is: " + p.name + "!!");
         System.out.println("You Win: " + pot + " Chips!");
-        //System.exit(0);
-        /* At this point we want the runGame() function to close but idk how to do that */
+        gameOver = true;
     }
 
 }
