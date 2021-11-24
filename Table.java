@@ -1,6 +1,8 @@
 import java.util.*;
 //import java.io.*;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 public class Table {
     static ArrayList<Player> players;
     static ArrayList<Player> roundPlayers;
@@ -33,6 +35,7 @@ public class Table {
             }
         }
         Deck.burn();
+        System.out.printf("#######################################################%n%n");
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
@@ -42,6 +45,8 @@ public class Table {
         }
         System.out.println("Revealing Flop: ");
         revealCard(3);
+
+        System.out.printf("%n#######################################################%n%n");
         Deck.burn();
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
@@ -50,7 +55,9 @@ public class Table {
                 return;
             }
         }
+        System.out.println("Revealing Turn: ");
         revealCard(1);
+        System.out.printf("%n#######################################################%n%n");
         Deck.burn();
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
@@ -59,7 +66,9 @@ public class Table {
                 return;
             }
         }
+        System.out.println("Revealing River: ");
         revealCard(1);
+        System.out.printf("%n#######################################################%n%n");
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
@@ -68,11 +77,28 @@ public class Table {
             }
         }
         revealCard(0);
+        System.out.printf("%n#######################################################%n%n");
         declareWinner();
     }
 
     static void printCard(Card c) {
-        System.out.println(c.rank + " " + c.suit);
+        switch (c.rank) {
+            case 11:
+                System.out.println("J " + c.suit);
+                break;
+            case 12:
+                System.out.println("Q " + c.suit);
+                break;
+            case 13:
+                System.out.println("K " + c.suit);
+                break;
+            case 14:
+                System.out.println("A " + c.suit);
+                break;
+            default:
+                System.out.println(c.rank + " " + c.suit);
+                break;
+        }
     }
 
     static void promptPlayer() {
@@ -104,6 +130,8 @@ public class Table {
                 currentPlayer.check();
             } 
             catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("BITCH THERES AN ERROR");
                 currentPlayerIndex--;
                 promptPlayer();
             }
@@ -138,6 +166,7 @@ public class Table {
             currentPlayerIndex = 0;
         }
         currentPlayer = roundPlayers.get(currentPlayerIndex);
+        System.out.printf("%n#######################################################%n%n");
         //sc.close();
     }
 
@@ -166,7 +195,7 @@ public class Table {
         Collections.sort(roundPlayers, new Comparator<Player>() {
             @Override
             public int compare(Player o1, Player o2) {
-                return o1.hand.compareTo(o2.hand);
+                return o2.hand.compareTo(o1.hand);
             }
         });
         int numWinners = 1;
@@ -189,7 +218,7 @@ public class Table {
         else {
             System.out.println("Winners are: ");
             for(int i = 0; i < numWinners; i++) {
-                System.out.println(roundPlayers.get(i) + "!! You Win: " + roundPrize + "Chips!");
+                System.out.println(roundPlayers.get(i).name + "!! You Win: " + roundPrize + "Chips!");
             }
         }
     }

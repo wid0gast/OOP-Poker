@@ -20,6 +20,7 @@ public class Player {
             playerBet = currentChips;
             isAllIn = true;
         }
+        playerBet = Table.currentBet;
         currentChips -= playerBet;
     }
 
