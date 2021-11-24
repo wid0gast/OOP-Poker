@@ -36,6 +36,7 @@ public class Player {
         if(currentChips < Table.currentBet) {
             throw new NotEnoughChipsException("NOT ENOUGH CHIPS!");
         }
+        playerBet = n;
         currentChips -= playerBet;
         Table.currentBet = playerBet;
         if(currentChips == 0){

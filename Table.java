@@ -87,6 +87,7 @@ public class Table {
             printCard(c);
         }
         System.out.println("Pot: " + pot);
+        System.out.println("Current Bet: " + currentBet);
         System.out.println("Choose Option");
         System.out.println("1-call ; 2-check ; 3-raise ; 4-fold");
     }
@@ -108,7 +109,9 @@ public class Table {
             }
             break;
         case 3:
-            int tmp = sc.nextInt();
+            System.out.println("Enter Bet Amount");
+            int tmp = Integer.parseInt(sc.nextLine());
+
             try {
                 currentPlayer.raise(tmp);
                 pot += currentPlayer.playerBet;
