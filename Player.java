@@ -27,18 +27,21 @@ public class Player {
     void check() throws ForbiddenCheckException {
         for(int i = 0; i < Table.currentPlayerIndex; i++){
             if(Table.roundPlayers.get(i).playerBet != 0){
-                throw new ForbiddenCheckException("CANNOT CHECK");
+                throw new ForbiddenCheckException("CANNOT CHECK!");
             }
         }
         playerBet = 0; 
     }
 
-    void raise(int n) throws NotEnoughChipsException {
+    void raise(int n) throws NotEnoughChipsException, RaisingTooLittleException {
         if(currentChips < Table.currentBet) {
-            throw new NotEnoughChipsException("NOT ENOUGH CHIPS!");
+            throw new NotEnoughChipsException("NOT ENOUGH CHIPS!\nCall or Fold instead");
         }
+        if(n < Table.currentBet) {
+            throw new RaisingTooLittleException("Enter a Value more than current bet: ");
+        }
+        currentChips -= n - playerBet;
         playerBet = n;
-        currentChips -= playerBet;
         Table.currentBet = playerBet;
         if(currentChips == 0){
             isAllIn = true;

@@ -55,6 +55,7 @@ public class Table {
                 return;
             }
         }
+        catchChecks();
         System.out.println("Revealing Turn: ");
         revealCard(1);
         System.out.printf("%n#######################################################%n%n");
@@ -66,6 +67,7 @@ public class Table {
                 return;
             }
         }
+        catchChecks();
         System.out.println("Revealing River: ");
         revealCard(1);
         System.out.printf("%n#######################################################%n%n");
@@ -76,7 +78,7 @@ public class Table {
                 return;
             }
         }
-        revealCard(0);
+        catchChecks();
         System.out.printf("%n#######################################################%n%n");
         declareWinner();
     }
@@ -129,11 +131,12 @@ public class Table {
             try {
                 currentPlayer.check();
             } 
-            catch (Exception e) {
+            catch (ForbiddenCheckException e) {
                 System.out.println(e.getMessage());
-                System.out.println("BITCH THERES AN ERROR");
+                System.out.println("ERROR");
                 currentPlayerIndex--;
                 promptPlayer();
+                recordBet();
             }
             break;
         case 3:
@@ -144,9 +147,17 @@ public class Table {
                 currentPlayer.raise(tmp);
                 pot += currentPlayer.playerBet;
             } 
-            catch (Exception e) {
+            catch (NotEnoughChipsException e) {
+                System.out.println("Not enough chips to raise");
                 currentPlayerIndex--;
                 promptPlayer();
+                recordBet();
+            }
+            catch(RaisingTooLittleException e) {
+                System.out.println("Raise more than the current bet");
+                currentPlayerIndex--;
+                promptPlayer();
+                recordBet();
             }
             break;
         case 4:
@@ -160,6 +171,7 @@ public class Table {
             System.out.println("Invalid input");
             currentPlayerIndex--;
             promptPlayer();
+            recordBet();
             break;
         }
         if(++currentPlayerIndex >= numPlayers) {
@@ -170,21 +182,22 @@ public class Table {
         //sc.close();
     }
 
-    static void revealCard(int n){
+    static void catchChecks() {
         for(int i = 0; i < roundPlayers.size() - 1; i++){
             if(roundPlayers.get(i).isAllIn == false && roundPlayers.get(i + 1).isAllIn == false){
-                if(roundPlayers.get(i).playerBet == roundPlayers.get(i + 1).playerBet){
-                    continue;
-                }
-                else{
+                if(roundPlayers.get(i).playerBet != roundPlayers.get(i + 1).playerBet){
                     currentPlayer = roundPlayers.get(i);
                     promptPlayer();
+                    recordBet();
                 }
             }
             else{
                 continue;
             }
         }
+    }
+
+    static void revealCard(int n){
         for(int i = 0; i < n; i++) {
             Deck.deal(communityCards);
             printCard(communityCards.get(communityCards.size() - 1));
@@ -223,7 +236,7 @@ public class Table {
         else {
             System.out.println("Winners are: ");
             for(int i = 0; i < numWinners; i++) {
-                System.out.println(roundPlayers.get(i).name + "!! You Win: " + roundPrize + "Chips!");
+                System.out.println(roundPlayers.get(i).name + "!! You Win: " + roundPrize + " Chips!");
             }
         }
     }
