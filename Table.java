@@ -172,12 +172,17 @@ public class Table {
 
     static void revealCard(int n){
         for(int i = 0; i < numPlayers; i++){
-            if(roundPlayers.get(i).playerBet == currentBet){
-                continue;
+            if(roundPlayers.get(i).isAllIn == false && roundPlayers.get(i + 1).isAllIn == false){
+                if(roundPlayers.get(i).playerBet == roundPlayers.get(i + 1).playerBet){
+                    continue;
+                }
+                else{
+                    currentPlayer = roundPlayers.get(i);
+                    promptPlayer();
+                }
             }
             else{
-                currentPlayer = roundPlayers.get(i);
-                promptPlayer();
+                continue;
             }
         }
         for(int i = 0; i < n; i++) {
