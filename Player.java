@@ -48,9 +48,4 @@ public class Player {
         Table.roundPlayers.remove(this);
         Table.currentPlayerIndex--;
     }
-
-    void leaveGame(){
-        Table.players.remove(this);
-        Table.numPlayers--;
-    }
 }
