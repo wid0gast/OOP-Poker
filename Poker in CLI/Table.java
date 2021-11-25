@@ -131,7 +131,6 @@ public class Table {
             } 
             catch (ForbiddenCheckException e) {
                 System.out.println(e.getMessage());
-                System.out.println("ERROR");
                 currentPlayerIndex--;
                 promptPlayer();
                 recordBet();
@@ -183,11 +182,20 @@ public class Table {
     static void catchChecks() {
         for(int i = 0; i < roundPlayers.size() - 1; i++){
             if(roundPlayers.get(i).isAllIn == false && roundPlayers.get(i + 1).isAllIn == false){
-                if(roundPlayers.get(i).playerBet != roundPlayers.get(i + 1).playerBet){
+                if(roundPlayers.get(i).playerBet == roundPlayers.get(i + 1).playerBet){
+                    continue;
+                }
+                else {
                     currentPlayer = roundPlayers.get(i);
                     promptPlayer();
                     recordBet();
                 }
+                
+                // if(roundPlayers.get(i).playerBet != roundPlayers.get(i + 1).playerBet){
+                //     currentPlayer = roundPlayers.get(i);
+                //     promptPlayer();
+                //     recordBet();
+                // }
             }
             else{
                 continue;

@@ -33,7 +33,7 @@ public class Table {
             }
         }
         Deck.burn();
-        System.out.printf("#######################################################%n%n");
+        PokerGUI.Prompt.setText("Round 1");
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
@@ -41,11 +41,11 @@ public class Table {
                 return;
             }
         }
-        System.out.println("Revealing Flop: ");
+        PokerGUI.Prompt.setText("Revealing Flop: ");
         revealCard(3);
 
-        System.out.printf("%n#######################################################%n%n");
         Deck.burn();
+        PokerGUI.Prompt.setText("Round 2");
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
@@ -54,10 +54,10 @@ public class Table {
             }
         }
         catchChecks();
-        System.out.println("Revealing Turn: ");
+        PokerGUI.Prompt.setText("Revealing Turn: ");
         revealCard(1);
-        System.out.printf("%n#######################################################%n%n");
         Deck.burn();
+        PokerGUI.Prompt.setText("Round 3");
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();
@@ -66,9 +66,9 @@ public class Table {
             }
         }
         catchChecks();
-        System.out.println("Revealing River: ");
+        PokerGUI.Prompt.setText("Revealing River: ");
         revealCard(1);
-        System.out.printf("%n#######################################################%n%n");
+        PokerGUI.Prompt.setText("Round 4");
         for(int i = 0; i < numPlayers; i++) {
             promptPlayer();
             recordBet();

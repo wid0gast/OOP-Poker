@@ -8,18 +8,17 @@ public class Deck {
         deck = new Stack<>();
         for(int i = 0; i < 4; i++) {
             for(int j = 2; j < 15; j++) {
-                int filename = i * 13 + j - 1;
                 if(i == 0) {
-                    deck.push(new Card(j, "Clubs", filename + ".png"));
+                    deck.push(new Card(j, "Clubs"));
                 }
                 if(i == 1) {
-                    deck.push(new Card(j, "Spades", filename + ".png"));
+                    deck.push(new Card(j, "Spades"));
                 }
                 if(i == 2) {
-                    deck.push(new Card(j, "Hearts", filename + ".png"));
+                    deck.push(new Card(j, "Hearts"));
                 }
                 if(i == 3) {
-                    deck.push(new Card(j, "Diamonds", filename + ".png"));
+                    deck.push(new Card(j, "Diamonds"));
                 }
             }
         }
