@@ -1,8 +1,6 @@
 import java.util.*;
 //import java.io.*;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
-
 public class Table {
     static ArrayList<Player> players;
     static ArrayList<Player> roundPlayers;

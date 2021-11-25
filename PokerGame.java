@@ -2,9 +2,14 @@ import java.util.*;
 //import java.io.*;
 
 public class PokerGame {
+    int intInput;
+    String stringInput;
+    public static void takingInput() {
+
+    }
     public static void main(String args[]) {
         PokerGame game = new PokerGame();
-        game.testGame();
+        //game.testGame();
         // ArrayList<Player> players = new ArrayList<>();
         // Scanner sc = new Scanner(System.in);
         // System.out.println("Number of Players?");
@@ -29,6 +34,30 @@ public class PokerGame {
         // }
         // System.out.println("Thank You For Playing!");
         // sc.close();
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PokerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PokerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PokerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PokerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PokerGUI().setVisible(true);
+            }
+        });
     }
 
     public void testGame() {
