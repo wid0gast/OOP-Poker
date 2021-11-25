@@ -2,38 +2,42 @@ import java.util.*;
 //import java.io.*;
 
 public class PokerGame {
-    int intInput;
-    String stringInput;
-    public static void takingInput() {
-
-    }
+    public static String input1;
+    public static String input2;
+    public static String input3;
+    
     public static void main(String args[]) {
-        PokerGame game = new PokerGame();
+        //PokerGame game = new PokerGame();
         //game.testGame();
-        // ArrayList<Player> players = new ArrayList<>();
-        // Scanner sc = new Scanner(System.in);
-        // System.out.println("Number of Players?");
-        // int n = sc.nextInt();
-        // for(int i = 1; i <= n; i++) {
-        //     System.out.println("Name of Player " + i);
-        //     sc.nextLine();
-        //     String tmp1 = sc.nextLine();
-        //     System.out.println("Number of chips of Player " + i);
-        //     int tmp2 = sc.nextInt();
-        //     Player tmp = new Player(tmp1, tmp2);
-        //     players.add(tmp);
-        // }
-        // Table table = new Table(players);
-        // table.runGame();
-        // System.out.printf("Another Round? %n1: Yes %n2: No");
-        // int x = sc.nextInt();
-        // while(x == 1) {
-        //     table.runGame();
-        //     System.out.printf("Another Round? %n1: Yes %n2: No");
-        //     x = sc.nextInt();
-        // }
-        // System.out.println("Thank You For Playing!");
-        // sc.close();
+        ArrayList<Player> players = new ArrayList<>();
+        PokerGUI.Prompt.setText("Number of Players?");
+        int n = Integer.parseInt(input3);
+        for(int i = 1; i <= n; i++) {
+            PokerGUI.Prompt.setText("Name of Player " + i);
+            while(n == Integer.parseInt(input3)) {
+                continue;
+            }
+            String tmp1 = input3;
+            PokerGUI.Prompt.setText("Number of chips of Player " + i);
+            while(tmp1 == input3) {
+                continue;
+            }
+            int tmp2 = Integer.parseInt(input3);
+            Player tmp = new Player(tmp1, tmp2);
+            players.add(tmp);
+            while(tmp2 == Integer.parseInt(input3));
+        }
+        Table table = new Table(players);
+        table.runGame();
+        PokerGUI.Prompt.setText("Another Round? %n1: Yes %n2: No");
+        int x = sc.nextInt();
+        while(x == 1) {
+            table.runGame();
+            System.out.printf("Another Round? %n1: Yes %n2: No");
+            x = sc.nextInt();
+        }
+        System.out.println("Thank You For Playing!");
+        sc.close();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
