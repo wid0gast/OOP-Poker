@@ -40,6 +40,7 @@ public class Player {
         if(n < Table.currentBet) {
             throw new RaisingTooLittleException("Enter a Value more than current bet: ");
         }
+        currentChips -= n;
         playerBet = n;
         Table.currentBet = playerBet;
         if(currentChips == 0){
