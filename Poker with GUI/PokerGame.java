@@ -29,15 +29,12 @@ public class PokerGame {
         }
         Table table = new Table(players);
         table.runGame();
-        PokerGUI.Prompt.setText("Another Round? %n1: Yes %n2: No");
-        int x = sc.nextInt();
-        while(x == 1) {
+        PokerGUI.Prompt.setText("Another Round? %n1: Yes%n0: No");
+        while(PokerGame.input3 == "1") {
             table.runGame();
-            System.out.printf("Another Round? %n1: Yes %n2: No");
-            x = sc.nextInt();
+            PokerGUI.Prompt.setText("Another Round? %n1: Yes%n0: No");
         }
         System.out.println("Thank You For Playing!");
-        sc.close();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

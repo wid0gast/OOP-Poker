@@ -203,7 +203,10 @@ public class PokerGUI extends javax.swing.JFrame {
 
     public void CalllActionPerformed(java.awt.event.ActionEvent evt) {                                      
         PokerGame.input1 = "1";
-    }                                                                             
+    }                                     
+
+    public void BetAmountTextActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    }                                             
 
     public void RaiseActionPerformed(java.awt.event.ActionEvent evt) {                                      
         PokerGame.input1 = "3";
@@ -213,7 +216,10 @@ public class PokerGUI extends javax.swing.JFrame {
 
     public void FoldActionPerformed(java.awt.event.ActionEvent evt) {                                     
         PokerGame.input1 = "4";
-    }                                                                           
+    }                                    
+
+    public void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    }                                           
 
     public void EnterActionPerformed(java.awt.event.ActionEvent evt) {                                      
         PokerGame.input3 = jTextField1.getText();

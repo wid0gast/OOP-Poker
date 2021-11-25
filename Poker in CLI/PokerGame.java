@@ -20,11 +20,11 @@ public class PokerGame {
         }
         Table table = new Table(players);
         table.runGame();
-        System.out.printf("Another Round? %n1: Yes %n2: No");
+        System.out.printf("Another Round? %n1: Yes %n2: No%n");
         int x = sc.nextInt();
         while(x == 1) {
             table.runGame();
-            System.out.printf("Another Round? %n1: Yes %n2: No");
+            System.out.printf("Another Round? %n1: Yes %n2: No%n");
             x = sc.nextInt();
         }
         System.out.println("Thank You For Playing!");
